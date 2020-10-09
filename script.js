@@ -1,5 +1,5 @@
 $( document ).ready(function() {
-    var appID = "";
+    var appID = "330bdacad723effeefd38103fc953d4e";
 
     $(".query_btn").click(function(){
 
@@ -10,14 +10,14 @@ $( document ).ready(function() {
 
         var weather = "http://api.openweathermap.org/data/2.5/weather?q=" + query_param + "&APPID=" + appID;
         
-
+        //${Math.floor( * 9 / 5 - 459.67)
        
 
         $.getJSON(weather,function(json){
             $("#city").html(json.name);
             $("#weather_image").attr("src", "http://openweathermap.org/img/w/" + json.weather[0].icon + ".png");
             $("#main_weather").html(`Weather: ${json.weather[0].main}`);
-            $("#temperature").html(`Temperature: ${json.main.temp} degrees`);
+            $("#temperature").html(`Temperature: ${Math.floor(json.main.temp * 9 / 5 - 459.67)} degrees`);
             $("#humidity").html(`Humidity: ${json.main.humidity}%`);
             longitude = json.coord.lon;
             console.log(longitude);
@@ -41,10 +41,33 @@ $( document ).ready(function() {
 
             var fiveDay = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${appID}`;
             console.log(fiveDay);
-                //day image temp humidiy
+                //day image temp humidity
             $.getJSON(fiveDay, function(json) {
-                console.log(json.daily[0].weather);
+                console.log(json.daily[0]);
+                $("#dateOne").html(json.daily[0].weather[0].main);
+                $("#imageOne").attr("src", "http://openweathermap.org/img/w/" + json.daily[0].weather[0].icon + ".png");
+                $("#humidityOne").html(`Humidity: ${json.daily[0].humidity}%`);
+                $("#tempOne").html(`${Math.floor(json.daily[0].temp.day * 9 / 5 - 459.67)} degrees`);
 
+                $("#dateTwo").html(json.daily[1].weather[0].main);
+                $("#imageTwo").attr("src", "http://openweathermap.org/img/w/" + json.daily[1].weather[0].icon + ".png");
+                $("#humidityTwo").html(`Humidity: ${json.daily[1].humidity}%`);
+                $("#tempTwo").html(`${Math.floor(json.daily[1].temp.day * 9 / 5 - 459.67)} degrees`);
+
+                $("#dateThree").html(json.daily[2].weather[0].main);
+                $("#imageThree").attr("src", "http://openweathermap.org/img/w/" + json.daily[2].weather[0].icon + ".png");
+                $("#humidityThree").html(`Humidity: ${json.daily[2].humidity}%`);
+                $("#tempThree").html(`${Math.floor(json.daily[2].temp.day * 9 / 5 - 459.67)} degrees`);
+
+                $("#dateFour").html(json.daily[3].weather[0].main);
+                $("#imageFour").attr("src", "http://openweathermap.org/img/w/" + json.daily[3].weather[0].icon + ".png");
+                $("#humidityFour").html(`Humidity: ${json.daily[3].humidity}%`);
+                $("#tempFour").html(`${Math.floor(json.daily[3].temp.day * 9 / 5 - 459.67)} degrees`);
+
+                $("#dateFive").html(json.daily[4].weather[0].main);
+                $("#imageFive").attr("src", "http://openweathermap.org/img/w/" + json.daily[4].weather[0].icon + ".png");
+                $("#humidityFive").html(`Humidity: ${json.daily[4].humidity}%`);
+                $("#tempFive").html(`${Math.floor(json.daily[4].temp.day * 9 / 5 - 459.67)} degrees`);
             })
 
             })
