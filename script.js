@@ -1,5 +1,5 @@
 $( document ).ready(function() {
-    var appID = "330bdacad723effeefd38103fc953d4e";
+    var appID = "";
 
     $(".query_btn").click(function(){
 
@@ -38,6 +38,15 @@ $( document ).ready(function() {
                 } else if (json[0].value <= 10) {
                     $("#uvi-color").addClass("red");
                 }
+
+            var fiveDay = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${appID}`;
+            console.log(fiveDay);
+                //day image temp humidiy
+            $.getJSON(fiveDay, function(json) {
+                console.log(json.daily[0].weather);
+
+            })
+
             })
         
         });
