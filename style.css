@@ -1,0 +1,45 @@
+.myNav {
+    height: 100px; 
+    background-color: #CB5A28;
+    color: white;
+    font-size: 50px;
+    font-weight: bold;
+}
+
+.search-box {
+    background-color: #008183;
+}
+
+.results-box {
+    background-color: #909ab7;
+}
+
+.green {
+    background-color: green;
+}
+
+.yellow {
+    background-color: yellow;
+}
+
+.orange {
+    background-color: orange;
+}
+
+.red {
+    background-color: red;
+}
+
+
+/*Light green #0DB14B
+  Gray #97A2A2
+  Orange #F08521
+  Light blue #008183
+  Lighter blue #909ab7
+  Gray-purple #535054
+  Yellow #D1DE3F
+  Pink #E8D9B5
+  Pastel orange #C89A58
+  Pea green #94AE4A
+  Purple #6E005F
+  Another orange #CB5A28*/
