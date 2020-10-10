@@ -9,8 +9,8 @@ Over the course of this project, I also moved away from using nested functions b
 of trying to retrieve data from those nested functions. I also spend more attention to initializing my
 javascript before starting it up. 
 
-Repo: LINK
-Deployed web page: LINK
+Repo: https://github.com/brianrshort/open-weather-api-weather-dashboard
+Deployed web page: https://brianrshort.github.io/open-weather-api-weather-dashboard/ 
 
 Image/gif: PLACEHOLDER
 
