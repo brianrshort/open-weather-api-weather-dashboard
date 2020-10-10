@@ -1,135 +1,129 @@
 //Let's get started
 $( document ).ready(function() {
 
-
-
-
-
-    //Using Luxon to get date
-    let DateTime = luxon.DateTime;
-
-    console.log(localStorage.getItem("city"));
-
     //Open weather authentication ID
     var appID = "330bdacad723effeefd38103fc953d4e";
+
+    //Pull last search from local storage, if there is one
+    if (localStorage.getItem("city") !== undefined) {
+        $("#city").html(localStorage.getItem("city"));
+        getCoordinates(localStorage.getItem("city"));
+    }
+
+    //Using Luxon to get date
+    let DateTime = luxon.DateTime; 
 
     //Variable for counting how many items in the search box element
     let query_count = 0; 
 
-    //Event listener for the search buttons
-    $(".query_btn").click(function(){
+    //The One Call API from Open Weather has all of our information in it, but you need to longitude and latitude.
+    //This function grabs the longitude and latitude and then calls our getWeather function to fill in the page. 
+    function getCoordinates(query_param){
 
-        //Grabs the value of the search box
-        var query_param = $(this).prev().val();
-        localStorage.setItem("city" , query_param);
-        console.log(query_param);
-
-        //Variables to grab latitude and longitude coordinates from Open Weather that can then be resubmitted for other queries
+        //The basic API request URL
+        var coords = "http://api.openweathermap.org/data/2.5/weather?q=" + query_param + "&APPID=" + appID;
         var longitude;
         var latitude;
 
-        //The basic API request URL
-        var weather = "http://api.openweathermap.org/data/2.5/weather?q=" + query_param + "&APPID=" + appID;
-        
-        //Increases the query count, appends the search item below the search box, adds event listener for items
-        //below the search box, populates the result boxes and five-day forecast boxes based on clicked item
+        //Here's the API request to Open Weather that gives us our longitude and latitude coordinates
+        $.ajax({
+            url: coords,
+            method: "GET"
+          }).then(function(response) {
+            longitude = response.coord.lon;
+            latitude = response.coord.lat;
+            getWeather(longitude, latitude);
+        })
+
+    //This gets the weather information from the One Call API from Open Weather and populates the page with it
+    function getWeather(longitude, latitude) {
+        var weather = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${appID}`;
+
+            //Here's the API request
+            $.ajax({
+                url: weather,
+                method: "GET"
+            }).then(function(response) {
+
+                //This section populates the current weather section of the HTML
+                $("#weather_image").attr("src", "http://openweathermap.org/img/w/" + response.current.weather[0].icon + ".png");
+                $("#main_weather").html(`Weather: ${response.current.weather[0].main}`);
+                $("#temperature").html(`Temperature: ${Math.floor(response.current.temp * 9 / 5 - 459.67)}F`);
+                $("#humidity").html(`Humidity: ${response.current.humidity}%`);
+                $("#uvi").html(`UVI: <span id="uvi-color" class="badge">${response.current.uvi}</span>`);
+
+                //If/else if statement to change the badge color based on the UVI index
+                if (response.current.uvi <= 2) {
+                    $("#uvi-color").addClass("badge-info");
+                } else if (response.current.uvi <= 5) {
+                    $("#uvi-color").addClass("badge-primary");
+                } else if (response.current.uvi <= 7) {
+                    $("#uvi-color").addClass("badge-warning");
+                } else if (response.current.uvi <= 10) {
+                    $("#uvi-color").addClass("badge-danger");
+                }
+
+
+                //Creates and fill the first day forecasted weather information
+                $("#dateOne").html(DateTime.local().toLocaleString());
+                $("#imageOne").attr("src", "http://openweathermap.org/img/w/" + response.daily[0].weather[0].icon + ".png");
+                $("#humidityOne").html(`${response.daily[0].humidity}% hum`);
+                $("#tempOne").html(`${Math.floor(response.daily[0].temp.day * 9 / 5 - 459.67)}F`);
+
+                //Creates and fill the second day forecasted weather information
+                $("#dateTwo").html(DateTime.local().plus({days: 1}).toLocaleString());
+                $("#imageTwo").attr("src", "http://openweathermap.org/img/w/" + response.daily[1].weather[0].icon + ".png");
+                $("#humidityTwo").html(`${response.daily[1].humidity}% hum`);
+                $("#tempTwo").html(`${Math.floor(response.daily[1].temp.day * 9 / 5 - 459.67)}F`);
+
+                //Creates and fill the third day forecasted weather information
+                $("#dateThree").html(DateTime.local().plus({days: 2}).toLocaleString());
+                $("#imageThree").attr("src", "http://openweathermap.org/img/w/" + response.daily[2].weather[0].icon + ".png");
+                $("#humidityThree").html(`${response.daily[2].humidity}% hum`);
+                $("#tempThree").html(`${Math.floor(response.daily[2].temp.day * 9 / 5 - 459.67)}F`);
+
+                //Creates and fill the fourth day forecasted weather information
+                $("#dateFour").html(DateTime.local().plus({days: 3}).toLocaleString());
+                $("#imageFour").attr("src", "http://openweathermap.org/img/w/" + response.daily[3].weather[0].icon + ".png");
+                $("#humidityFour").html(`${response.daily[3].humidity}% hum`);
+                $("#tempFour").html(`${Math.floor(response.daily[3].temp.day * 9 / 5 - 459.67)}F`);
+
+                //Creates and fill the fifth day forecasted weather information                
+                $("#dateFive").html(DateTime.local().plus({days: 4}).toLocaleString());
+                $("#imageFive").attr("src", "http://openweathermap.org/img/w/" + response.daily[4].weather[0].icon + ".png");
+                $("#humidityFive").html(`${response.daily[4].humidity}% hum`);
+                $("#tempFive").html(`${Math.floor(response.daily[4].temp.day * 9 / 5 - 459.67)}F`);
+
+            })
+        }
+
+    }
+
+    //Here's the listener event for the query button, which begins a new search
+    $(".query_btn").click(function(){
+
+        //Grabs the value of the search box
+        query_param = $(this).prev().val();
+        localStorage.setItem("city" , query_param);
+        $("#city").html(query_param);
+        getCoordinates(query_param);
+
+
+        //This logs our search requests below the search box in a history search list; the list is limited to ten items for
+        //the sake of space
         if (query_count < 10) {
             query_count++;
             let queryBreak = $("<hr>");
             let queryEl = $("<div>");
             queryEl.text(query_param);
+            queryEl.attr("data-name" , query_param);
             $(".search-box").append(queryBreak , queryEl);
             queryEl.on("click" , function() {
-                    populate();
+                var searchCity = $(this).attr("data-name");
+                    $("#city").html(searchCity);
+                    getCoordinates(searchCity);
                 })
-        }
-
-
-        
-        //Our big function to get data through Open Weather API and append it to our HTML
-        function populate() {
-            
-        //Our API request
-        $.getJSON(weather,function(json){
-            
-            //Filling the results box with information from the API JSON
-            $("#city").html(json.name);
-            $("#weather_image").attr("src", "http://openweathermap.org/img/w/" + json.weather[0].icon + ".png");
-            $("#main_weather").html(`Weather: ${json.weather[0].main}`);
-            $("#temperature").html(`Temperature: ${Math.floor(json.main.temp * 9 / 5 - 459.67)}F`);
-            $("#humidity").html(`Humidity: ${json.main.humidity}%`);
-
-            //Setting our variables to the coordinates retrieved from the first search; our user is searching
-            //via city name, not longitude/latitude coordinates, so we need to get these coordinates from 
-            //Open Weather to then make more refined requests to Open Weather based on long/lat
-            longitude = json.coord.lon;
-            latitude = json.coord.lat;         
-           
-            //The UVI API request URL
-            var uvi = `http://api.openweathermap.org/data/2.5/uvi/forecast?lat=${latitude}&lon=${longitude}&appid=${appID}`;
-
-            //Our UVI API request
-            $.getJSON(uvi, function(json) {
-                //Creating our UVI element
-                $("#uvi").html(`UVI: <span id="uvi-color" class="badge">${json[0].value}</span>`);
-                //If/else if statement to change the backgroudn color based on the UVI index
-                if (json[0].value <= 2) {
-                    $("#uvi-color").addClass("badge-info");
-                } else if (json[0].value <= 5) {
-                    $("#uvi-color").addClass("badge-primary");
-                } else if (json[0].value <= 7) {
-                    $("#uvi-color").addClass("badge-warning");
-                } else if (json[0].value <= 10) {
-                    $("#uvi-color").addClass("badge-danger");
-                }
-
-            //Creating the five-day forecast API request URL
-            var fiveDay = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${appID}`;
-
-            //The five-day forecast API request
-            $.getJSON(fiveDay, function(json) {
-
-                let DateTime = luxon.DateTime;
-
-                //Creates and fill the first day forecasted weather information
-                $("#dateOne").html(DateTime.local().toLocaleString());
-                $("#imageOne").attr("src", "http://openweathermap.org/img/w/" + json.daily[0].weather[0].icon + ".png");
-                $("#humidityOne").html(`${json.daily[0].humidity}% hum`);
-                $("#tempOne").html(`${Math.floor(json.daily[0].temp.day * 9 / 5 - 459.67)}F`);
-
-                //Creates and fill the second day forecasted weather information
-                $("#dateTwo").html(DateTime.local().plus({days: 1}).toLocaleString());
-                $("#imageTwo").attr("src", "http://openweathermap.org/img/w/" + json.daily[1].weather[0].icon + ".png");
-                $("#humidityTwo").html(`${json.daily[1].humidity}% hum`);
-                $("#tempTwo").html(`${Math.floor(json.daily[1].temp.day * 9 / 5 - 459.67)}F`);
-
-                //Creates and fill the third day forecasted weather information
-                $("#dateThree").html(DateTime.local().plus({days: 2}).toLocaleString());
-                $("#imageThree").attr("src", "http://openweathermap.org/img/w/" + json.daily[2].weather[0].icon + ".png");
-                $("#humidityThree").html(`${json.daily[2].humidity}% hum`);
-                $("#tempThree").html(`${Math.floor(json.daily[2].temp.day * 9 / 5 - 459.67)}F`);
-
-                //Creates and fill the fourth day forecasted weather information
-                $("#dateFour").html(DateTime.local().plus({days: 3}).toLocaleString());
-                $("#imageFour").attr("src", "http://openweathermap.org/img/w/" + json.daily[3].weather[0].icon + ".png");
-                $("#humidityFour").html(`${json.daily[3].humidity}% hum`);
-                $("#tempFour").html(`${Math.floor(json.daily[3].temp.day * 9 / 5 - 459.67)}F`);
-
-                //Creates and fill the fifth day forecasted weather information                
-                $("#dateFive").html(DateTime.local().plus({days: 4}).toLocaleString());
-                $("#imageFive").attr("src", "http://openweathermap.org/img/w/" + json.daily[4].weather[0].icon + ".png");
-                $("#humidityFive").html(`${json.daily[4].humidity}% hum`);
-                $("#tempFive").html(`${Math.floor(json.daily[4].temp.day * 9 / 5 - 459.67)}F`);
-            })
-
+            }
         })
-        
-    });
-        
-    }
-    
-    //Calls our main function
-    populate();
-    });
+})
 
-});
