@@ -1,14 +1,12 @@
 //Let's get started
 $( document ).ready(function() {
 
+    console.log(localStorage.getItem("city"));
 
-
-
+    var query_param;
 
     //Using Luxon to get date
     let DateTime = luxon.DateTime;
-
-    console.log(localStorage.getItem("city"));
 
     //Open weather authentication ID
     var appID = "330bdacad723effeefd38103fc953d4e";
@@ -16,20 +14,30 @@ $( document ).ready(function() {
     //Variable for counting how many items in the search box element
     let query_count = 0; 
 
-    //Event listener for the search buttons
-    $(".query_btn").click(function(){
+    //Variables to grab latitude and longitude coordinates from Open Weather that can then be resubmitted for other queries
+    var longitude;
+    var latitude;
 
-        //Grabs the value of the search box
-        var query_param = $(this).prev().val();
+    //The basic API request URL
+    var weather = "http://api.openweathermap.org/data/2.5/weather?q=" + query_param + "&APPID=" + appID;
+
+    //Creating the five-day forecast API request URL
+    var fiveDay = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${appID}`;
+
+    //The UVI API request URL
+    var uvi = `http://api.openweathermap.org/data/2.5/uvi/forecast?lat=${latitude}&lon=${longitude}&appid=${appID}`;
+
+    
+       
+    
+        
+    //Our big function to get data through Open Weather API and append it to our HTML
+    function populate() {
+
+         //Grabs the value of the search box
+        query_param = $(this).prev().val();
         localStorage.setItem("city" , query_param);
         console.log(query_param);
-
-        //Variables to grab latitude and longitude coordinates from Open Weather that can then be resubmitted for other queries
-        var longitude;
-        var latitude;
-
-        //The basic API request URL
-        var weather = "http://api.openweathermap.org/data/2.5/weather?q=" + query_param + "&APPID=" + appID;
         
         //Increases the query count, appends the search item below the search box, adds event listener for items
         //below the search box, populates the result boxes and five-day forecast boxes based on clicked item
@@ -42,13 +50,8 @@ $( document ).ready(function() {
             queryEl.on("click" , function() {
                     populate();
                 })
-        }
-
-
+        }    
         
-        //Our big function to get data through Open Weather API and append it to our HTML
-        function populate() {
-            
         //Our API request
         $.getJSON(weather,function(json){
             
@@ -65,8 +68,7 @@ $( document ).ready(function() {
             longitude = json.coord.lon;
             latitude = json.coord.lat;         
            
-            //The UVI API request URL
-            var uvi = `http://api.openweathermap.org/data/2.5/uvi/forecast?lat=${latitude}&lon=${longitude}&appid=${appID}`;
+            
 
             //Our UVI API request
             $.getJSON(uvi, function(json) {
@@ -83,13 +85,8 @@ $( document ).ready(function() {
                     $("#uvi-color").addClass("badge-danger");
                 }
 
-            //Creating the five-day forecast API request URL
-            var fiveDay = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${appID}`;
-
             //The five-day forecast API request
             $.getJSON(fiveDay, function(json) {
-
-                let DateTime = luxon.DateTime;
 
                 //Creates and fill the first day forecasted weather information
                 $("#dateOne").html(DateTime.local().toLocaleString());
@@ -125,11 +122,10 @@ $( document ).ready(function() {
         })
         
     });
-        
-    }
     
-    //Calls our main function
-    populate();
-    });
-
-});
+    //Event listener for the search buttons
+    $(".query_btn").click(function(){
+        populate();
+    })
+}
+})

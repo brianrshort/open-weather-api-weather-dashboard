@@ -8,13 +8,14 @@
 
 .search-box {
     background-color: #008183;
+    color: white;
 }
 
 .results-box {
     background-color: #909ab7;
 }
 
-.five-day {
+.day-card {
     background-color: #E8D9B5;
 }
 

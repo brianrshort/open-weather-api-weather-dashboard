@@ -1,14 +1,10 @@
 //Let's get started
 $( document ).ready(function() {
 
-
-
-
+    console.log(localStorage.getItem("city"));
 
     //Using Luxon to get date
-    let DateTime = luxon.DateTime;
-
-    console.log(localStorage.getItem("city"));
+    let DateTime = luxon.DateTime;  
 
     //Open weather authentication ID
     var appID = "330bdacad723effeefd38103fc953d4e";
@@ -16,38 +12,18 @@ $( document ).ready(function() {
     //Variable for counting how many items in the search box element
     let query_count = 0; 
 
-    //Event listener for the search buttons
-    $(".query_btn").click(function(){
+    let query_param;
 
-        //Grabs the value of the search box
-        var query_param = $(this).prev().val();
-        localStorage.setItem("city" , query_param);
-        console.log(query_param);
+    //Variables to grab latitude and longitude coordinates from Open Weather that can then be resubmitted for other queries
+    var longitude;
+    var latitude;
 
-        //Variables to grab latitude and longitude coordinates from Open Weather that can then be resubmitted for other queries
-        var longitude;
-        var latitude;
-
-        //The basic API request URL
-        var weather = "http://api.openweathermap.org/data/2.5/weather?q=" + query_param + "&APPID=" + appID;
-        
-        //Increases the query count, appends the search item below the search box, adds event listener for items
-        //below the search box, populates the result boxes and five-day forecast boxes based on clicked item
-        if (query_count < 10) {
-            query_count++;
-            let queryBreak = $("<hr>");
-            let queryEl = $("<div>");
-            queryEl.text(query_param);
-            $(".search-box").append(queryBreak , queryEl);
-            queryEl.on("click" , function() {
-                    populate();
-                })
-        }
+    //The basic API request URL
+    var weather = "http://api.openweathermap.org/data/2.5/weather?q=" + query_param + "&APPID=" + appID;
 
 
-        
-        //Our big function to get data through Open Weather API and append it to our HTML
-        function populate() {
+    //Our big function to get data through Open Weather API and append it to our HTML
+    function populate(query_param) {
             
         //Our API request
         $.getJSON(weather,function(json){
@@ -125,11 +101,35 @@ $( document ).ready(function() {
         })
         
     });
-        
     }
-    
-    //Calls our main function
-    populate();
-    });
+
+
+
+
+    //Event listener for the search buttons
+    $(".query_btn").click(function(){
+
+        //Grabs the value of the search box
+        query_param = $(this).prev().val();
+        localStorage.setItem("city" , query_param);
+        console.log(query_param);
+        populate(query_param);
+        
+        //Increases the query count, appends the search item below the search box, adds event listener for items
+        //below the search box, populates the result boxes and five-day forecast boxes based on clicked item
+        if (query_count < 10) {
+            query_count++;
+            let queryBreak = $("<hr>");
+            let queryEl = $("<div>");
+            queryEl.text(query_param);
+            $(".search-box").append(queryBreak , queryEl);
+            queryEl.on("click" , function() {
+                    populate(query_param);
+                })
+        }
+
+        //Calls our main function
+        
+        });
 
 });
