@@ -21,7 +21,7 @@ $( document ).ready(function() {
     function getCoordinates(query_param){
 
         //The basic API request URL
-        var coords = "http://api.openweathermap.org/data/2.5/weather?q=" + query_param + "&APPID=" + appID;
+        var coords = "https://api.openweathermap.org/data/2.5/weather?q=" + query_param + "&APPID=" + appID;
         var longitude;
         var latitude;
 
@@ -46,7 +46,7 @@ $( document ).ready(function() {
             }).then(function(response) {
 
                 //This section populates the current weather section of the HTML
-                $("#weather_image").attr("src", "http://openweathermap.org/img/w/" + response.current.weather[0].icon + ".png");
+                $("#weather_image").attr("src", "https://openweathermap.org/img/w/" + response.current.weather[0].icon + ".png");
                 $("#main_weather").html(`Weather: ${response.current.weather[0].main}`);
                 $("#temperature").html(`Temperature: ${Math.floor(response.current.temp * 9 / 5 - 459.67)}F`);
                 $("#humidity").html(`Humidity: ${response.current.humidity}%`);
@@ -66,31 +66,31 @@ $( document ).ready(function() {
 
                 //Creates and fill the first day forecasted weather information
                 $("#dateOne").html(DateTime.local().toLocaleString());
-                $("#imageOne").attr("src", "http://openweathermap.org/img/w/" + response.daily[0].weather[0].icon + ".png");
+                $("#imageOne").attr("src", "https://openweathermap.org/img/w/" + response.daily[0].weather[0].icon + ".png");
                 $("#humidityOne").html(`${response.daily[0].humidity}% hum`);
                 $("#tempOne").html(`${Math.floor(response.daily[0].temp.day * 9 / 5 - 459.67)}F`);
 
                 //Creates and fill the second day forecasted weather information
                 $("#dateTwo").html(DateTime.local().plus({days: 1}).toLocaleString());
-                $("#imageTwo").attr("src", "http://openweathermap.org/img/w/" + response.daily[1].weather[0].icon + ".png");
+                $("#imageTwo").attr("src", "https://openweathermap.org/img/w/" + response.daily[1].weather[0].icon + ".png");
                 $("#humidityTwo").html(`${response.daily[1].humidity}% hum`);
                 $("#tempTwo").html(`${Math.floor(response.daily[1].temp.day * 9 / 5 - 459.67)}F`);
 
                 //Creates and fill the third day forecasted weather information
                 $("#dateThree").html(DateTime.local().plus({days: 2}).toLocaleString());
-                $("#imageThree").attr("src", "http://openweathermap.org/img/w/" + response.daily[2].weather[0].icon + ".png");
+                $("#imageThree").attr("src", "https://openweathermap.org/img/w/" + response.daily[2].weather[0].icon + ".png");
                 $("#humidityThree").html(`${response.daily[2].humidity}% hum`);
                 $("#tempThree").html(`${Math.floor(response.daily[2].temp.day * 9 / 5 - 459.67)}F`);
 
                 //Creates and fill the fourth day forecasted weather information
                 $("#dateFour").html(DateTime.local().plus({days: 3}).toLocaleString());
-                $("#imageFour").attr("src", "http://openweathermap.org/img/w/" + response.daily[3].weather[0].icon + ".png");
+                $("#imageFour").attr("src", "https://openweathermap.org/img/w/" + response.daily[3].weather[0].icon + ".png");
                 $("#humidityFour").html(`${response.daily[3].humidity}% hum`);
                 $("#tempFour").html(`${Math.floor(response.daily[3].temp.day * 9 / 5 - 459.67)}F`);
 
                 //Creates and fill the fifth day forecasted weather information                
                 $("#dateFive").html(DateTime.local().plus({days: 4}).toLocaleString());
-                $("#imageFive").attr("src", "http://openweathermap.org/img/w/" + response.daily[4].weather[0].icon + ".png");
+                $("#imageFive").attr("src", "https://openweathermap.org/img/w/" + response.daily[4].weather[0].icon + ".png");
                 $("#humidityFive").html(`${response.daily[4].humidity}% hum`);
                 $("#tempFive").html(`${Math.floor(response.daily[4].temp.day * 9 / 5 - 459.67)}F`);
 
