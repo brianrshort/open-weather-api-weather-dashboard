@@ -10,9 +10,10 @@ of trying to retrieve data from those nested functions. I also spend more attent
 javascript before starting it up. 
 
 Repo: https://github.com/brianrshort/open-weather-api-weather-dashboard
+
 Deployed web page: https://brianrshort.github.io/open-weather-api-weather-dashboard/ 
 
-Image/gif: PLACEHOLDER
+Image/gif: ![Moving gif of website in action](/assets/Weather-Dashboard.gif)
 
 Here's the original assignment:
 Developers are often tasked with retrieving data from another application's API and using it in the context of their own. Third-party APIs allow developers to access their data and functionality by making requests with specific parameters to a URL. Your challenge is to build a weather dashboard that will run in the browser and feature dynamically updated HTML and CSS.
