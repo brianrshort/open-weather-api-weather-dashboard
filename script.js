@@ -65,32 +65,48 @@ $( document ).ready(function() {
 
 
                 //Creates and fill the first day forecasted weather information
+                let image1 = $("<img>");
+                let image2  = $("<img>");
+                let image3 = $("<img>");
+                let image4 = $("<img>");
+                let image5 = $("<img>");
+
                 $("#dateOne").html(DateTime.local().toLocaleString());
-                $("#imageOne").attr("src", "https://openweathermap.org/img/w/" + response.daily[0].weather[0].icon + ".png");
+                image1.attr("src", "https://openweathermap.org/img/w/" + response.daily[0].weather[0].icon + ".png");
+                image1.attr("alt" , "weather icon");
+                $("#imageOne").append(image1);
                 $("#humidityOne").html(`${response.daily[0].humidity}% hum`);
                 $("#tempOne").html(`${Math.floor(response.daily[0].temp.day * 9 / 5 - 459.67)}F`);
 
                 //Creates and fill the second day forecasted weather information
                 $("#dateTwo").html(DateTime.local().plus({days: 1}).toLocaleString());
-                $("#imageTwo").attr("src", "https://openweathermap.org/img/w/" + response.daily[1].weather[0].icon + ".png");
+                image2.attr("src", "https://openweathermap.org/img/w/" + response.daily[1].weather[0].icon + ".png");
+                image2.attr("alt" , "weather icon");
+                $("#imageTwo").append(image2);
                 $("#humidityTwo").html(`${response.daily[1].humidity}% hum`);
                 $("#tempTwo").html(`${Math.floor(response.daily[1].temp.day * 9 / 5 - 459.67)}F`);
 
                 //Creates and fill the third day forecasted weather information
                 $("#dateThree").html(DateTime.local().plus({days: 2}).toLocaleString());
-                $("#imageThree").attr("src", "https://openweathermap.org/img/w/" + response.daily[2].weather[0].icon + ".png");
+                image3.attr("src", "https://openweathermap.org/img/w/" + response.daily[2].weather[0].icon + ".png");
+                image3.attr("alt" , "weather icon");
+                $("#imageThree").append(image3);
                 $("#humidityThree").html(`${response.daily[2].humidity}% hum`);
                 $("#tempThree").html(`${Math.floor(response.daily[2].temp.day * 9 / 5 - 459.67)}F`);
 
                 //Creates and fill the fourth day forecasted weather information
                 $("#dateFour").html(DateTime.local().plus({days: 3}).toLocaleString());
-                $("#imageFour").attr("src", "https://openweathermap.org/img/w/" + response.daily[3].weather[0].icon + ".png");
+                image4.attr("src", "https://openweathermap.org/img/w/" + response.daily[3].weather[0].icon + ".png");
+                image4.attr("alt" , "weather icon");
+                $("#imageFour").append(image4);
                 $("#humidityFour").html(`${response.daily[3].humidity}% hum`);
                 $("#tempFour").html(`${Math.floor(response.daily[3].temp.day * 9 / 5 - 459.67)}F`);
 
                 //Creates and fill the fifth day forecasted weather information                
                 $("#dateFive").html(DateTime.local().plus({days: 4}).toLocaleString());
-                $("#imageFive").attr("src", "https://openweathermap.org/img/w/" + response.daily[4].weather[0].icon + ".png");
+                image5.attr("src", "https://openweathermap.org/img/w/" + response.daily[4].weather[0].icon + ".png");
+                image5.attr("alt" , "weather icon");
+                $("#imageFive").append(image5);
                 $("#humidityFive").html(`${response.daily[4].humidity}% hum`);
                 $("#tempFive").html(`${Math.floor(response.daily[4].temp.day * 9 / 5 - 459.67)}F`);
 
