@@ -13,6 +13,8 @@ Repo: https://github.com/brianrshort/open-weather-api-weather-dashboard
 
 Deployed web page: https://brianrshort.github.io/open-weather-api-weather-dashboard/ 
 
+License: MIT
+
 Image/gif: 
 
 <img src="/Assets/Weather-Dashboard.gif?raw=true" width="400px">
