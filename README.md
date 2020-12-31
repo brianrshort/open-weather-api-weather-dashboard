@@ -1,13 +1,26 @@
-# open-weather-api-weather-dashboard
+# Open Weather API Weather Dashboard
+
 This project gives users an opportunity to select a city and quickly see the current weather
 in that city and to see a quick 5-day forecast in a snapshot, easy-to-read format.
 
-To complete this project I further developed my skills in javascript, jQuery, html, and CSS, and 
-began using API GET methods for the first time. 
+# Motivation
 
-Over the course of this project, I also moved away from using nested functions becuase of the difficulties 
-of trying to retrieve data from those nested functions. I also spend more attention to initializing my
-javascript before starting it up. 
+This project was completed as part of the Michigan State University/Trilogy Web Development Bootcamp Program.
+The goal was to practice skills in JavaScript, jQuery, dynamically produced HTML, CSS3, and 
+API GET methods. 
+
+# Features
+
+The app takes in user queries and produces two sets of data: one for the current weather in the queried location and another
+for the five-day forecast for that same location. 
+
+The current weather lists the conditions, temperature, humidity, and ultraviolet index (UVI).
+
+The five-day weather forecast includes a visual representation of the conditions, the temperature, and humidity. 
+
+# Image/gif 
+
+<img src="/Assets/Weather-Dashboard.gif?raw=true" width="400px">
 
 # Repo 
 Link -- https://github.com/brianrshort/open-weather-api-weather-dashboard
@@ -18,8 +31,5 @@ Link -- https://brianrshort.github.io/open-weather-api-weather-dashboard/
 # License
 MIT
 
-# Image/gif 
-
-<img src="/Assets/Weather-Dashboard.gif?raw=true" width="400px">
 
 
