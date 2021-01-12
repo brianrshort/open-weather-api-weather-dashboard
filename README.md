@@ -9,6 +9,10 @@ This project was completed as part of the Michigan State University/Trilogy Web 
 The goal was to practice skills in JavaScript, jQuery, dynamically produced HTML, CSS3, and 
 API GET methods. 
 
+# Technologies Use
+
+JavaScript, jQuery, dynamically created HTML, CSS3, and API GET methods. 
+
 # Features
 
 The app takes in user queries and produces two sets of data: one for the current weather in the queried location and another
@@ -31,5 +35,5 @@ Link -- https://brianrshort.github.io/open-weather-api-weather-dashboard/
 # License
 MIT
 
-
-
+# Contact
+Link -- https://github.com/brianrshort
