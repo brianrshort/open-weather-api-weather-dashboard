@@ -2,7 +2,7 @@
 $( document ).ready(function() {
 
     //Open weather authentication ID
-    var appID = "330bdacad723effeefd38103fc953d4e";
+    var appID = "166a433c57516f51dfab1f7edaed8413";
 
     //Pull last search from local storage, if there is one
     if (localStorage.getItem("city") !== undefined) {
