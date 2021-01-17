@@ -41,5 +41,3 @@ Github -- https://github.com/brianrshort
 # Contact
 LinkedIn -- https://www.linkedin.com/in/brian-short-b3017320/
 
-# Contact
-Link -- https://github.com/brianrshort
